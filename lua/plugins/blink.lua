@@ -26,7 +26,6 @@ return {
 			snippets = { preset = "luasnip" },
 
 			completion = {
-				list = { selection = { preselect = false } },
 				documentation = { auto_show = false },
 			},
 

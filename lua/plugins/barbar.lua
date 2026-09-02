@@ -1,6 +1,5 @@
 local options = {
 	auto_hide = 1,
-	theme = "tokyonight",
 	icons = { modified = { button = "" } },
 	sidebar_filetypes = { ["neo-tree"] = { event = "BufWipeout" } },
 }

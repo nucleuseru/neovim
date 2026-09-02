@@ -1,5 +1,8 @@
-function config(_, opts)
-	require("which-key").setup(opts)
+function config()
+	require("which-key").setup({
+		preset = "helix",
+		icons = { mappings = false },
+	})
 	local wk = require("which-key")
 	wk.add({
 		{ "<leader>l", group = "lsp" },
@@ -12,8 +15,7 @@ end
 return {
 	{
 		"folke/which-key.nvim",
-    lazy = false,
-		opts = { icons = { mappings = false } },
+		lazy = false,
 		config = config,
 	},
 }

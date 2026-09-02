@@ -12,7 +12,7 @@ require("lazy").setup({
 		{ import = "plugins" },
 	},
 
-	install = { colorscheme = { "tokyonight", "catppuccin" } },
+	install = { colorscheme = { "catppuccin-nvim" } },
 	checker = { enabled = false },
 	defaults = { lazy = true },
 

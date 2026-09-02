@@ -13,14 +13,14 @@ end, { desc = "format" })
 
 map("n", "<C-s>", "<cmd>w<cr>", { desc = "save" })
 map("n", "<leader>w", "<cmd>w<cr>", { desc = "save" })
-map("n", "<Esc>", "<cmd>noh<CR>", { desc = "clear highlights" })
+map("n", "<leader>c", "<cmd>bclose<cr>", { desc = "close" })
+map("n", "<Esc>", "<cmd>noh<cr>", { desc = "clear highlights" })
 
 -- Better window navigation
 map("n", "<C-h>", "<C-w>h", { desc = "move to left window" })
 map("n", "<C-j>", "<C-w>j", { desc = "move to lower window" })
 map("n", "<C-k>", "<C-w>k", { desc = "move to upper window" })
 map("n", "<C-l>", "<C-w>l", { desc = "move to right window" })
-map("n", "<C-q>", "<cmd>close<cr>", { desc = "close window" })
 
 -- Better indent in visual mode
 map("v", "<", "<gv", { desc = "indent left" })
@@ -81,7 +81,7 @@ vim.keymap.set("n", "<End>", function()
 end)
 
 -- dropbar
-vim.keymap.set("n", "<Leader>b", function(...)
+vim.keymap.set("n", "<leader>b", function(...)
 	require("dropbar.api").pick(...)
 end, { desc = "Pick symbols in winbar" })
 vim.keymap.set("n", "[;", function(...)

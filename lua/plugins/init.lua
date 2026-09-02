@@ -4,7 +4,6 @@ return {
 
 	{ "OXY2DEV/foldtext.nvim", lazy = false },
 	{ "chrisgrieser/nvim-origami", event = "VeryLazy", opts = {} },
-	{ "catppuccin/nvim", name = "catppuccin", lazy = false, priority = 1000 },
 
 	{
 		"folke/lazydev.nvim",
