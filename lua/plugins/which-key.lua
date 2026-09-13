@@ -1,21 +1,20 @@
 function config()
-	require("which-key").setup({
+	local wk = require("which-key")
+
+	wk.setup({
 		preset = "helix",
 		icons = { mappings = false },
 	})
-	local wk = require("which-key")
+
 	wk.add({
-		{ "<leader>l", group = "lsp" },
+		{ "<leader>b", group = "buffer" },
 		{ "<leader>f", group = "telescope" },
-		{ "<leader>s", group = "search" },
 		{ "<leader>g", group = "git" },
+		{ "<leader>l", group = "lsp" },
+		{ "<leader>s", group = "search" },
 	})
 end
 
 return {
-	{
-		"folke/which-key.nvim",
-		lazy = false,
-		config = config,
-	},
+	{ "folke/which-key.nvim", config = config },
 }

@@ -21,6 +21,8 @@ function config()
 		end,
 	})
 
+	require("lspconfig.configs").vtsls = require("vtsls").lspconfig
+
 	vim.lsp.config("*", {
 		capabilities = require("nvim-file-operations.config").default_capabilities(),
 	})
@@ -64,9 +66,9 @@ function config()
 end
 
 return {
-	{
-		"neovim/nvim-lspconfig",
-		config = config,
-		dependencies = { "b0o/schemastore.nvim" },
-	},
+	"b0o/schemastore.nvim",
+	{ "mason-org/mason.nvim", opts = {} },
+	{ "mason-org/mason-lspconfig.nvim", opts = { automatic_enable = true } },
+	{ "yioneko/nvim-vtsls", name = "vtsls", confg = false },
+	{ "neovim/nvim-lspconfig", config = config },
 }

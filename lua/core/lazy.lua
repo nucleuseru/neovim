@@ -14,7 +14,6 @@ require("lazy").setup({
 
 	install = { colorscheme = { "catppuccin-nvim" } },
 	checker = { enabled = false },
-	defaults = { lazy = true },
 
 	ui = {
 		icons = {
