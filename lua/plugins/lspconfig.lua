@@ -1,3 +1,5 @@
+local map = require("core/mappings").map
+
 function config()
 	local x = vim.diagnostic.severity
 
@@ -25,6 +27,22 @@ function config()
 
 	vim.lsp.config("*", {
 		capabilities = require("nvim-file-operations.config").default_capabilities(),
+	})
+
+	vim.lsp.config("vtsls", {
+		---@type lspconfig.settings.vtsls
+		settings = {
+			typescript = {
+				inlayHints = {
+					parameterNames = { enabled = "literals" },
+					parameterTypes = { enabled = true },
+					variableTypes = { enabled = true },
+					propertyDeclarationTypes = { enabled = true },
+					functionLikeReturnTypes = { enabled = true },
+					enumMemberValues = { enabled = true },
+				},
+			},
+		},
 	})
 
 	vim.lsp.config("lua_ls", {
@@ -63,6 +81,10 @@ function config()
 			},
 		},
 	})
+
+	map("n", "<leader>lR", "<cmd>VtsExec restart_tsserver<cmd>", { desc = "restart typescript server" })
+	map("n", "<leader>lO", "<cmd>VtsExec organize_imports<cmd>", { desc = "organize typescript imports" })
+	map("n", "<leader>lS", "<cmd>VtsExec select_ts_version<cmd>", { desc = "select typescript workspace version" })
 end
 
 return {
