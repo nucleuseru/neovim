@@ -34,8 +34,8 @@ local function config()
 		},
 	})
 
-	map("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", { desc = "explorer" })
-	map("n", "<C-e>", "<cmd>NvimTreeToggle<cr>", { desc = "explorer" })
+	map("n", "<leader>e", "<cmd>NvimTreeOpen<cr>", { desc = "explorer" })
+	map("n", "<C-e>", "<cmd>NvimTreeOpen<cr>", { desc = "explorer" })
 end
 
 return {
