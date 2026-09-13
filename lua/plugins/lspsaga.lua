@@ -1,7 +1,12 @@
 local map = require("core/mappings").map
 
 local function config()
-	require("lspsaga").setup()
+	require("lspsaga").setup({
+    symbol_in_winbar = {
+      enable = false
+    }
+  })
+
 	map("n", "<leader>la", "<cmd>Lspsaga code_action<cr>", { desc = "code action" })
 	map("n", "<leader>ll", "<cmd>Lspsaga show_line_diagnostics<cr>", { desc = "next diagnostic" })
 	map("n", "<leader>ld", "<cmd>Lspsaga finder def<cr>", { desc = "definition" })

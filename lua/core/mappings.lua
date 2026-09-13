@@ -1,10 +1,7 @@
 local M = {}
 
 local function map(mode, lhs, rhs, opts)
-	opts = vim.tbl_deep_extend("force", {
-		noremap = true,
-		silent = true,
-	}, opts or {})
+	opts = vim.tbl_deep_extend("force", { silent = true }, opts or {})
 
 	vim.keymap.set(mode, lhs, rhs, opts)
 end

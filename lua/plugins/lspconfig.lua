@@ -16,30 +16,50 @@ function config()
 		callback = function(args)
 			local client = vim.lsp.get_client_by_id(args.data.client_id)
 
-			if client and client.name == "cspell_ls" then
+			if not client then
+				return
+			end
+
+			client.server_capabilities.semanticTokensProvider = nil
+
+			if client.name == "cspell_ls" then
 				local ns = vim.lsp.diagnostic.get_namespace(client.id)
 				vim.diagnostic.config({ signs = false }, ns)
+			end
+
+			if client.name == "vtsls" then
+				client.server_capabilities.documentFormattingProvider = false
+				client.server_capabilities.documentRangeFormattingProvider = false
 			end
 		end,
 	})
 
 	require("lspconfig.configs").vtsls = require("vtsls").lspconfig
 
-	vim.lsp.config("*", {
-		capabilities = require("nvim-file-operations.config").default_capabilities(),
-	})
+	local capabilities = vim.tbl_deep_extend(
+		"force",
+		vim.lsp.protocol.make_client_capabilities(),
+		require("blink-cmp").get_lsp_capabilities(require("nvim-file-operations.config").default_capabilities())
+	)
+
+	if capabilities.workspace then
+		capabilities.workspace.didChangeWatchedFiles = { dynamicRegistration = false }
+	end
+
+	vim.lsp.config("*", { capabilities = capabilities })
 
 	vim.lsp.config("vtsls", {
 		---@type lspconfig.settings.vtsls
 		settings = {
+			vtsls = {
+				autoUseWorkspaceTsdk = true,
+				experimental = {
+					completion = { enableServerSideFuzzyMatch = true },
+				},
+			},
 			typescript = {
-				inlayHints = {
-					parameterNames = { enabled = "literals" },
-					parameterTypes = { enabled = true },
-					variableTypes = { enabled = true },
-					propertyDeclarationTypes = { enabled = true },
-					functionLikeReturnTypes = { enabled = true },
-					enumMemberValues = { enabled = true },
+				tsserver = {
+					maxTsServerMemory = 8192,
 				},
 			},
 		},
