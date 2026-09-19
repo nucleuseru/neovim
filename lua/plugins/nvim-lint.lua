@@ -6,7 +6,7 @@ local function config()
 		typescriptreact = { "eslint_d", "cspell" },
 	}
 
-	vim.api.nvim_create_autocmd({ "InsertLeave" }, {
+	vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
 		callback = function()
 			require("lint").try_lint()
 		end,

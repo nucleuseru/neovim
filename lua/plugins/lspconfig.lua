@@ -1,6 +1,6 @@
 local map = require("core/mappings").map
 
-function config()
+local function config()
 	local x = vim.diagnostic.severity
 
 	vim.diagnostic.config({
@@ -21,11 +21,6 @@ function config()
 			end
 
 			client.server_capabilities.semanticTokensProvider = nil
-
-			if client.name == "cspell_ls" then
-				local ns = vim.lsp.diagnostic.get_namespace(client.id)
-				vim.diagnostic.config({ signs = false }, ns)
-			end
 
 			if client.name == "vtsls" then
 				client.server_capabilities.documentFormattingProvider = false

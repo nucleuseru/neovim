@@ -1,4 +1,4 @@
-function config()
+local function config()
 	local wk = require("which-key")
 
 	wk.setup({
