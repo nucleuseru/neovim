@@ -59,6 +59,8 @@ opt.virtualedit = "block" -- Allow cursor to move where there is no text in visu
 opt.wildmode = "longest:full,full" -- Command-line completion mode
 opt.wrap = false -- Disable line wrap
 
+vim.g.clipboard = "osc52"
+
 -- Tressiter folds
 vim.wo[0][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.wo[0][0].foldmethod = "expr"

@@ -1,9 +1,9 @@
 local function config()
 	require("lint").linters_by_ft = {
-		javascript = { "eslint_d", "cspell" },
-		javascriptreact = { "eslint_d", "cspell" },
-		typescript = { "eslint_d", "cspell" },
-		typescriptreact = { "eslint_d", "cspell" },
+		javascript = { "oxlint", "cspell" },
+		javascriptreact = { "oxlint", "cspell" },
+		typescript = { "oxlint", "cspell" },
+		typescriptreact = { "oxlint", "cspell" },
 	}
 
 	vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {

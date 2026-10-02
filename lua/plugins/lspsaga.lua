@@ -19,7 +19,7 @@ local function config()
 	map("n", "go", "<cmd>Lspsaga outline<cr>", { desc = "outline" })
 	map("n", "gd", "<cmd>Lspsaga finder def<cr>", { desc = "definition" })
 	map("n", "gD", "<cmd>Lspsaga finder ref+imp<cr>", { desc = "references" })
-	map("n", "K", "<cmd>Lspsaga hover_doc<cr>", { desc = "hover" })
+	-- map("n", "K", "<cmd>Lspsaga hover_doc<cr>", { desc = "hover" })
 end
 
 return {
