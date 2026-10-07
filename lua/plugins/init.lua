@@ -4,6 +4,8 @@ return {
 
 	{ "max397574/better-escape.nvim", opts = {} },
 
+	{ "lewis6991/ts-install.nvim", opts = { auto_install = true } },
+
 	{
 		"folke/lazydev.nvim",
 		ft = "lua",
