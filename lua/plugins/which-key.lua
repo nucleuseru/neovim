@@ -8,13 +8,11 @@ local function config()
 
 	wk.add({
 		{ "<leader>b", group = "buffer" },
-		{ "<leader>f", group = "telescope" },
+		{ "<leader>f", group = "fzf" },
 		{ "<leader>g", group = "git" },
 		{ "<leader>l", group = "lsp" },
 		{ "<leader>s", group = "search" },
 	})
 end
 
-return {
-	{ "folke/which-key.nvim", config = config },
-}
+return { "folke/which-key.nvim", config = config }

@@ -30,19 +30,4 @@ local function config()
 	map("n", "<leader>bw", "<Cmd>BufferWipeout<CR>", { desc = "wipeout" })
 end
 
-return {
-	{
-		"romgrk/barbar.nvim",
-		version = "^1.0.0",
-		init = function()
-			vim.g.barbar_auto_setup = false
-			vim.opt.sessionoptions:append("globals")
-
-			vim.api.nvim_create_user_command("Mksession", function(attr)
-				vim.api.nvim_exec_autocmds("User", { pattern = "SessionSavePre" })
-				vim.api.nvim_command("mksession " .. (attr.bang and "!" or "") .. attr.args)
-			end, { bang = true, complete = "file", nargs = "?" })
-		end,
-		config = config,
-	},
-}
+return { "romgrk/barbar.nvim", version = "^1.0.0", config = config }

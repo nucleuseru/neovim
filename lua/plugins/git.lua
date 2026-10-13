@@ -44,17 +44,4 @@ local function config()
 	})
 end
 
-return {
-	{ "lewis6991/gitsigns.nvim", config = config },
-
-	{
-		"NeogitOrg/neogit",
-		dependencies = {
-			"sindrets/diffview.nvim",
-			"m00qek/baleia.nvim",
-		},
-		keys = {
-			{ "<leader>gg", "<cmd>Neogit<cr>", desc = "Show Neogit UI" },
-		},
-	},
-}
+return { "lewis6991/gitsigns.nvim", config = config }

@@ -58,12 +58,10 @@ opt.updatetime = 200 -- Save swap file and trigger CursorHold
 opt.virtualedit = "block" -- Allow cursor to move where there is no text in visual block mode
 opt.wildmode = "longest:full,full" -- Command-line completion mode
 opt.wrap = false -- Disable line wrap
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+opt.foldmethod = "expr"
 
 vim.g.clipboard = "osc52"
-
--- Tressiter folds
-vim.wo[0][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
-vim.wo[0][0].foldmethod = "expr"
 
 vim.g.markdown_recommended_style = 0
 vim.g.no_plugin_maps = true

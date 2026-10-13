@@ -4,6 +4,12 @@ local function config()
 
 		completion = {
 			documentation = { auto_show = false },
+			list = { selection = { preselect = false, auto_insert = true } },
+			menu = {
+				auto_show = function(ctx)
+					return ctx.mode ~= "default"
+				end,
+			},
 		},
 
 		signature = {
@@ -18,29 +24,21 @@ local function config()
 		},
 
 		sources = {
-			default = { "lazydev", "lsp", "path", "snippets", "buffer" },
-			providers = {
-				lazydev = {
-					name = "LazyDev",
-					module = "lazydev.integrations.blink",
-					score_offset = 100,
-				},
-			},
+			default = { "lsp", "path", "snippets", "buffer" },
 		},
+
 		fuzzy = { implementation = "rust" },
 	})
 end
 
 return {
-	{
-		"saghen/blink.cmp",
-		dependencies = {
-			"saghen/blink.lib",
-			"rafamadriz/friendly-snippets",
-		},
-		build = function()
-			require("blink.cmp").build():pwait()
-		end,
-		config = config,
+	"saghen/blink.cmp",
+	dependencies = {
+		"saghen/blink.lib",
+		"rafamadriz/friendly-snippets",
 	},
+	build = function()
+		require("blink.cmp").build():pwait()
+	end,
+	config = config,
 }

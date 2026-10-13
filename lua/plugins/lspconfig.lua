@@ -1,5 +1,3 @@
-local map = require("core/mappings").map
-
 local function config()
 	local x = vim.diagnostic.severity
 
@@ -25,15 +23,6 @@ local function config()
 			if client.name == "vtsls" then
 				client.server_capabilities.documentFormattingProvider = false
 				client.server_capabilities.documentRangeFormattingProvider = false
-
-				--[[ map("n", "<leader>lR", "<cmd>VtsExec restart_tsserver<cmd>", { desc = "restart typescript server" })
-				map("n", "<leader>lO", "<cmd>VtsExec organize_imports<cmd>", { desc = "organize typescript imports" })
-				map(
-					"n",
-					"<leader>lS",
-					"<cmd>VtsExec select_ts_version<cmd>",
-					{ desc = "select typescript workspace version" }
-				) ]]
 			end
 		end,
 	})
@@ -43,7 +32,7 @@ local function config()
 	local capabilities = vim.tbl_deep_extend(
 		"force",
 		vim.lsp.protocol.make_client_capabilities(),
-		require("blink-cmp").get_lsp_capabilities(require("nvim-file-operations.config").default_capabilities())
+		require("blink.cmp").get_lsp_capabilities(require("nvim-file-operations.config").default_capabilities())
 	)
 
 	if capabilities.workspace then
@@ -111,6 +100,6 @@ return {
 	"b0o/schemastore.nvim",
 	{ "mason-org/mason.nvim", opts = {} },
 	{ "mason-org/mason-lspconfig.nvim", opts = { automatic_enable = true } },
-	{ "yioneko/nvim-vtsls", name = "vtsls", confg = false },
+	{ "yioneko/nvim-vtsls", name = "vtsls" },
 	{ "neovim/nvim-lspconfig", config = config },
 }

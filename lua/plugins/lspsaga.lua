@@ -1,11 +1,7 @@
 local map = require("core/mappings").map
 
 local function config()
-	require("lspsaga").setup({
-    symbol_in_winbar = {
-      enable = false
-    }
-  })
+	require("lspsaga").setup()
 
 	map("n", "<leader>la", "<cmd>Lspsaga code_action<cr>", { desc = "code action" })
 	map("n", "<leader>ll", "<cmd>Lspsaga show_line_diagnostics<cr>", { desc = "next diagnostic" })
@@ -19,9 +15,7 @@ local function config()
 	map("n", "go", "<cmd>Lspsaga outline<cr>", { desc = "outline" })
 	map("n", "gd", "<cmd>Lspsaga finder def<cr>", { desc = "definition" })
 	map("n", "gD", "<cmd>Lspsaga finder ref+imp<cr>", { desc = "references" })
-	-- map("n", "K", "<cmd>Lspsaga hover_doc<cr>", { desc = "hover" })
+	map("n", "K", "<cmd>Lspsaga hover_doc<cr>", { desc = "hover" })
 end
 
-return {
-	{ "nvimdev/lspsaga.nvim", event = "LspAttach", config = config },
-}
+return { "nvimdev/lspsaga.nvim", event = "LspAttach", config = config }
