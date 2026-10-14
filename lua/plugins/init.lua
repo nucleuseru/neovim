@@ -1,5 +1,4 @@
 return {
-	"nvim-lua/plenary.nvim",
 	"nvim-tree/nvim-web-devicons",
 
 	{ "MeanderingProgrammer/render-markdown.nvim", opts = { completions = { lsp = { enabled = true } } } },

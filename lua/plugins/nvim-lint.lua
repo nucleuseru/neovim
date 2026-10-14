@@ -13,8 +13,4 @@ local function config()
 	})
 end
 
-return {
-	{ "mason-org/mason.nvim", opts = {} },
-	{ "mfussenegger/nvim-lint", config = config },
-	{ "rshkarin/mason-nvim-lint", opts = {} },
-}
+return { "mfussenegger/nvim-lint", config = config }
