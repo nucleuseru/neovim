@@ -24,6 +24,39 @@ local function config()
 				client.server_capabilities.documentFormattingProvider = false
 				client.server_capabilities.documentRangeFormattingProvider = false
 			end
+
+			local map = function(mode, lhs, rhs, desc)
+				vim.keymap.set(mode, lhs, rhs, { buffer = args.buf, desc = desc })
+			end
+
+			-- LSP navigation & information
+			map("n", "gd", "<cmd>FzfLua lsp_definitions<CR>", "Goto definition")
+			map("n", "gD", vim.lsp.buf.declaration, "Goto declaration")
+			map("n", "gr", "<cmd>FzfLua lsp_references<CR>", "Goto references")
+			map("n", "gi", "<cmd>FzfLua lsp_implementations<CR>", "Goto implementation")
+			map("n", "gy", "<cmd>FzfLua lsp_type_definitions<CR>", "Goto type definition")
+			map("n", "K", vim.lsp.buf.hover, "Hover documentation")
+			map("n", "gK", vim.lsp.buf.signature_help, "Signature help")
+
+			-- LSP actions under <leader>l
+			map({ "n", "v" }, "<leader>la", "<cmd>FzfLua lsp_code_actions<CR>", "Code action")
+			map("n", "<leader>lr", vim.lsp.buf.rename, "Rename symbol")
+			map("n", "<leader>ls", "<cmd>FzfLua lsp_document_symbols<CR>", "Document symbols")
+			map("n", "<leader>lS", "<cmd>FzfLua lsp_workspace_symbols<CR>", "Workspace symbols")
+			map("n", "<leader>ld", vim.diagnostic.open_float, "Line diagnostics")
+			map("n", "<leader>lD", "<cmd>FzfLua diagnostics_document<CR>", "Document diagnostics")
+			map("n", "<leader>lw", "<cmd>FzfLua diagnostics_workspace<CR>", "Workspace diagnostics")
+			map("n", "<leader>li", "<cmd>LspInfo<CR>", "LSP info")
+
+			-- Diagnostics navigation
+			map("n", "[d", vim.diagnostic.goto_prev, "Previous diagnostic")
+			map("n", "]d", vim.diagnostic.goto_next, "Next diagnostic")
+			map("n", "[e", function()
+				vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })
+			end, "Previous error")
+			map("n", "]e", function()
+				vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
+			end, "Next error")
 		end,
 	})
 
