@@ -71,11 +71,11 @@ local function config()
 		text_objects_move.goto_previous_end("@class.outer", "textobjects")
 	end, { desc = "Previous class end" })
 
-	map({ "n", "x", "o" }, "]d", function()
+	map({ "n", "x", "o" }, "]c", function()
 		text_objects_move.goto_next("@conditional.outer", "textobjects")
 	end, { desc = "Next conditional" })
 
-	map({ "n", "x", "o" }, "[d", function()
+	map({ "n", "x", "o" }, "[C", function()
 		text_objects_move.goto_previous("@conditional.outer", "textobjects")
 	end, { desc = "Previous conditional" })
 end
