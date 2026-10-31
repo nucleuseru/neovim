@@ -32,7 +32,7 @@ autocmd("BufReadPost", {
 -- Close help/man/quickfix with q
 autocmd("FileType", {
 	group = augroup("close_with_q", { clear = true }),
-	pattern = { "help", "man", "fugitive", "lspinfo", "notify", "qf" },
+	pattern = { "help", "man", "fugitive", "lspinfo", "notify", "qf", "grup-far" },
 	callback = function(args)
 		vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = args.buf, silent = true })
 	end,

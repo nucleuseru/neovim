@@ -1,7 +1,20 @@
 local map = require("core/mappings").map
 
 local function config()
-	require("fzf-lua").setup({ "telescope" })
+	local fzf = require("fzf-lua")
+
+	fzf.setup({
+		{ "telescope", "hide" },
+		fzf_colors = true,
+		actions = {
+			files = {
+				["ctrl-q"] = fzf.actions.file_sel_to_qf,
+				["alt-q"] = fzf.actions.file_sel_to_qf,
+			},
+		},
+	})
+
+	fzf.register_ui_select()
 
 	map("n", "<leader>ff", "<cmd>FzfLua files<CR>", { desc = "find files" })
 	map("n", "<leader>fw", "<cmd>FzfLua live_grep<CR>", { desc = "live grep" })
@@ -12,7 +25,8 @@ local function config()
 	map("n", "<leader>fz", "<cmd>FzfLua blines<CR>", { desc = "find in current buffer" })
 	map("n", "<leader>fc", "<cmd>FzfLua git_commits<CR>", { desc = "git commits" })
 	map("n", "<leader>fs", "<cmd>FzfLua git_status<CR>", { desc = "git status" })
-	map("n", "<leader>fd", "<cmd>TodoFzfLua<CR>", { desc = "todo comments" })
+	map("n", "<leader>fr", "<cmd>FzfLua resume<CR>", { desc = "resume last search" })
+	map("n", "<leader>fq", "<cmd>FzfLua quickfix<CR>", { desc = "quickfix list" })
 end
 
-return { "ibhagwan/fzf-lua", config = config }
+return { "ibhagwan/fzf-lua", dependencies = { "nvim-tree/nvim-web-devicons" }, config = config }
