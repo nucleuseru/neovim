@@ -8,6 +8,4 @@ return {
 	{ "JoosepAlviste/nvim-ts-context-commentstring", opts = { enable_autocmd = false } },
 
 	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
-
-	{ "MagicDuck/grug-far.nvim", opts = {} },
 }

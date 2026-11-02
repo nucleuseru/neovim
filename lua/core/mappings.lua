@@ -22,13 +22,4 @@ map("n", "<C-l>", "<C-w>l", { desc = "move to right window" })
 map("v", "<S-Tab>", "<gv", { desc = "indent left" })
 map("v", "<Tab>", ">gv", { desc = "indent right" })
 
--- Grugfar
-map({ "n", "x" }, "<leader>sl", function()
-	require("grug-far").open({ prefills = { paths = vim.fn.expand("%"), search = vim.fn.expand("<cword>") } })
-end, { desc = "local" })
-
-map({ "n", "x" }, "<leader>sg", function()
-	require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") } })
-end, { desc = "global" })
-
 return M

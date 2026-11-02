@@ -5,6 +5,7 @@ local function config()
 
 	fzf.setup({
 		{ "telescope", "hide" },
+		ui_select = {},
 		fzf_colors = true,
 		actions = {
 			files = {
@@ -13,8 +14,6 @@ local function config()
 			},
 		},
 	})
-
-	fzf.register_ui_select()
 
 	map("n", "<leader>ff", "<cmd>FzfLua files<CR>", { desc = "find files" })
 	map("n", "<leader>fw", "<cmd>FzfLua live_grep<CR>", { desc = "live grep" })

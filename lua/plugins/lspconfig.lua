@@ -49,13 +49,28 @@ local function config()
 			map("n", "<leader>li", "<cmd>LspInfo<CR>", "LSP info")
 
 			-- Diagnostics navigation
-			map("n", "[d", vim.diagnostic.goto_prev, "Previous diagnostic")
-			map("n", "]d", vim.diagnostic.goto_next, "Next diagnostic")
+
+			---@param diagnostic vim.Diagnostic?
+			local nav_diagnostics = function(diagnostic)
+				if diagnostic then
+					vim.api.nvim_win_set_cursor(0, { diagnostic.lnum, diagnostic.col })
+				end
+			end
+
+			map("n", "[d", function()
+				nav_diagnostics(vim.diagnostic.get_prev())
+			end, "Previous diagnostic")
+
+			map("n", "]d", function()
+				nav_diagnostics(vim.diagnostic.get_next())
+			end, "Next diagnostic")
+
 			map("n", "[e", function()
-				vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })
+				nav_diagnostics(vim.diagnostic.get_prev({ severity = vim.diagnostic.severity.ERROR }))
 			end, "Previous error")
+
 			map("n", "]e", function()
-				vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
+				nav_diagnostics(vim.diagnostic.get_next({ severity = vim.diagnostic.severity.ERROR }))
 			end, "Next error")
 		end,
 	})
