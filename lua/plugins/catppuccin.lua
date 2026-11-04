@@ -12,6 +12,15 @@ local function config()
 			mason = true,
 			which_key = true,
 		},
+		lsp_styles = {
+			underlines = {
+				errors = { "undercurl" },
+				warnings = { "undercurl" },
+				hints = { "undercurl" },
+				information = { "undercurl" },
+				ok = { "undercurl" },
+			},
+		},
 	})
 
 	vim.cmd.colorscheme("catppuccin-nvim")

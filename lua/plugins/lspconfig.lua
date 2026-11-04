@@ -1,3 +1,5 @@
+local map = require("core/mappings").map
+
 local function config()
 	local x = vim.diagnostic.severity
 
@@ -20,60 +22,65 @@ local function config()
 
 			client.server_capabilities.semanticTokensProvider = nil
 
-			if client.name == "vtsls" then
-				client.server_capabilities.documentFormattingProvider = false
-				client.server_capabilities.documentRangeFormattingProvider = false
-			end
-
-			local map = function(mode, lhs, rhs, desc)
-				vim.keymap.set(mode, lhs, rhs, { buffer = args.buf, desc = desc })
+			local lsp_map = function(mode, lhs, rhs, desc)
+				map(mode, lhs, rhs, { buffer = args.buf, desc = desc })
 			end
 
 			-- LSP navigation & information
-			map("n", "gd", "<cmd>FzfLua lsp_definitions<CR>", "Goto definition")
-			map("n", "gD", vim.lsp.buf.declaration, "Goto declaration")
-			map("n", "gr", "<cmd>FzfLua lsp_references<CR>", "Goto references")
-			map("n", "gi", "<cmd>FzfLua lsp_implementations<CR>", "Goto implementation")
-			map("n", "gy", "<cmd>FzfLua lsp_type_definitions<CR>", "Goto type definition")
-			map("n", "K", vim.lsp.buf.hover, "Hover documentation")
-			map("n", "gK", vim.lsp.buf.signature_help, "Signature help")
+			lsp_map("n", "gd", "<cmd>FzfLua lsp_definitions<CR>", "Goto definition")
+			lsp_map("n", "gD", "<cmd>FzfLua lsp_declarations<CR>", "Goto declaration")
+			lsp_map("n", "gr", "<cmd>FzfLua lsp_references<CR>", "Goto references")
+			lsp_map("n", "gi", "<cmd>FzfLua lsp_implementations<CR>", "Goto implementation")
+			lsp_map("n", "gy", "<cmd>FzfLua lsp_type_definitions<CR>", "Goto type definition")
+			lsp_map("n", "gl", vim.diagnostic.open_float, "Line diagnostics")
+			lsp_map("n", "K", vim.lsp.buf.hover, "Hover documentation")
+			lsp_map("n", "gK", vim.lsp.buf.signature_help, "Signature help")
 
 			-- LSP actions under <leader>l
-			map({ "n", "v" }, "<leader>la", "<cmd>FzfLua lsp_code_actions<CR>", "Code action")
-			map("n", "<leader>lr", vim.lsp.buf.rename, "Rename symbol")
-			map("n", "<leader>ls", "<cmd>FzfLua lsp_document_symbols<CR>", "Document symbols")
-			map("n", "<leader>lS", "<cmd>FzfLua lsp_workspace_symbols<CR>", "Workspace symbols")
-			map("n", "<leader>ld", vim.diagnostic.open_float, "Line diagnostics")
-			map("n", "<leader>lD", "<cmd>FzfLua diagnostics_document<CR>", "Document diagnostics")
-			map("n", "<leader>lw", "<cmd>FzfLua diagnostics_workspace<CR>", "Workspace diagnostics")
-			map("n", "<leader>li", "<cmd>LspInfo<CR>", "LSP info")
+			lsp_map({ "n", "v" }, "<leader>la", "<cmd>FzfLua lsp_code_actions<CR>", "Code action")
+			lsp_map("n", "<leader>ls", "<cmd>FzfLua lsp_document_symbols<CR>", "Document symbols")
+			lsp_map("n", "<leader>lS", "<cmd>FzfLua lsp_workspace_symbols<CR>", "Workspace symbols")
+			lsp_map("n", "<leader>lD", "<cmd>FzfLua diagnostics_document<CR>", "Document diagnostics")
+			lsp_map("n", "<leader>lw", "<cmd>FzfLua diagnostics_workspace<CR>", "Workspace diagnostics")
+			lsp_map("n", "<leader>lr", vim.lsp.buf.rename, "Rename symbol")
+			lsp_map("n", "<leader>ld", vim.diagnostic.open_float, "Line diagnostics")
 
 			-- Diagnostics navigation
-
-			---@param diagnostic vim.Diagnostic?
-			local nav_diagnostics = function(diagnostic)
-				if diagnostic then
-					vim.api.nvim_win_set_cursor(0, { diagnostic.lnum, diagnostic.col })
-				end
-			end
-
-			map("n", "[d", function()
-				nav_diagnostics(vim.diagnostic.get_prev())
+			lsp_map("n", "[d", function()
+				vim.diagnostic.jump({ count = -1 })
 			end, "Previous diagnostic")
 
-			map("n", "]d", function()
-				nav_diagnostics(vim.diagnostic.get_next())
+			lsp_map("n", "]d", function()
+				vim.diagnostic.jump({ count = 1 })
 			end, "Next diagnostic")
 
-			map("n", "[e", function()
-				nav_diagnostics(vim.diagnostic.get_prev({ severity = vim.diagnostic.severity.ERROR }))
+			lsp_map("n", "[e", function()
+				vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR })
 			end, "Previous error")
 
-			map("n", "]e", function()
-				nav_diagnostics(vim.diagnostic.get_next({ severity = vim.diagnostic.severity.ERROR }))
+			lsp_map("n", "]e", function()
+				vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR })
 			end, "Next error")
 		end,
 	})
+
+	local function lsp_format(client)
+		local formatters = { "stylua", "oxfmt", "clangd", "rust-analyzer", "docker-language-server" }
+		for _, value in ipairs(formatters) do
+			if value == client.name then
+				return true
+			end
+		end
+		return false
+	end
+
+	map("n", "<leader>lf", function()
+		vim.lsp.buf.format({ async = true, filter = lsp_format })
+	end, { desc = "Format" })
+
+	map("n", "<C-f>", function()
+		vim.lsp.buf.format({ async = true, filter = lsp_format })
+	end, { desc = "Format" })
 
 	require("lspconfig.configs").vtsls = require("vtsls").lspconfig
 
@@ -90,7 +97,6 @@ local function config()
 	vim.lsp.config("*", { capabilities = capabilities })
 
 	vim.lsp.config("vtsls", {
-		---@type lspconfig.settings.vtsls
 		settings = {
 			vtsls = {
 				autoUseWorkspaceTsdk = true,
@@ -107,7 +113,6 @@ local function config()
 	})
 
 	vim.lsp.config("lua_ls", {
-		---@type lspconfig.settings.lua_ls
 		settings = {
 			Lua = {
 				runtime = {
@@ -124,7 +129,6 @@ local function config()
 	})
 
 	vim.lsp.config("jsonls", {
-		---@type lspconfig.settings.jsonls
 		settings = {
 			json = {
 				schemas = require("schemastore").json.schemas(),
@@ -134,7 +138,6 @@ local function config()
 	})
 
 	vim.lsp.config("yamlls", {
-		---@type lspconfig.settings.yamlls
 		settings = {
 			yaml = {
 				schemaStore = { enable = false, url = "" },
@@ -153,8 +156,23 @@ local function config()
 		},
 	})
 
-	vim.lsp.enable("fallow")
+	vim.lsp.enable("oxfmt")
 end
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+	callback = function(args)
+		vim.keymap.set("n", "<leader>lA", function()
+			if vim.lsp.is_enabled("fallow") then
+				vim.cmd([[lsp disable fallow]])
+				vim.notify("Fallow LSP disabled", vim.log.levels.INFO)
+			else
+				vim.cmd([[lsp enable fallow]])
+				vim.notify("Fallow LSP enabled", vim.log.levels.INFO)
+			end
+		end, { buffer = args.buf, desc = "Toggle analyser", silent = true })
+	end,
+})
 
 return {
 	"b0o/schemastore.nvim",
