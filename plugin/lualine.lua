@@ -1,6 +1,12 @@
-return {
-	"nvim-lualine/lualine.nvim",
-	opts = {
+vim.pack.add({
+	"https://github.com/nvim-lualine/lualine.nvim",
+})
+
+local lualine = require("lualine")
+_G.Lualine = lualine
+
+later(function()
+	lualine.setup({
 		options = {
 			component_separators = "",
 			section_separators = "",
@@ -14,6 +20,6 @@ return {
 			lualine_y = { "progress" },
 			lualine_z = { { "datetime", style = "%H:%M" } },
 		},
-		extensions = { "lazy", "nvim-tree", "quickfix", "mason", "man" },
-	},
-}
+		extensions = { "nvim-tree", "quickfix", "mason", "man" },
+	})
+end)
