@@ -94,7 +94,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 local function lsp_format(client)
-	local formatters = { "stylua", "oxfmt", "clangd", "rust-analyzer", "docker-language-server" }
+	local formatters = { "stylua", "oxfmt", "clangd", "rust_analyzer", "docker-language-server" }
 	for _, value in ipairs(formatters) do
 		if value == client.name then
 			return true
@@ -147,7 +147,8 @@ later(function()
 
 	local servers = {
 		"lua_ls",
-		"vtsls",
+		-- "vtsls",
+    "tsrs",
 		"stylua",
 		"oxfmt",
 		"oxlint",

@@ -35,14 +35,12 @@ gitsigns.setup({
 		end, { expr = true, desc = "Prev hunk" })
 
 		-- Actions
-		git_map({ "n", "v" }, "<leader>gs", ":Gitsigns stage_hunk<CR>", { desc = "Stage hunk" })
-		git_map({ "n", "v" }, "<leader>gr", ":Gitsigns reset_hunk<CR>", { desc = "Seset hunk" })
-		git_map("n", "<leader>gS", gs.stage_buffer, { desc = "Stage buffer" })
-		git_map("n", "<leader>gu", gs.undo_stage_hunk, { desc = "Undo stage hunk" })
-		git_map("n", "<leader>gR", gs.reset_buffer, { desc = "Reset buffer" })
-		git_map("n", "<leader>gp", gs.preview_hunk_inline, { desc = "Preview hunk" })
-		git_map("n", "<leader>gb", function()
-			gs.blame_line({ full = true })
-		end, { desc = "Blame line" })
+		git_map({ "n", "v" }, "<leader>gs", "<cmd>Gitsigns stage_hunk<CR>", { desc = "Stage hunk" })
+		git_map({ "n", "v" }, "<leader>gr", "<cmd>Gitsigns reset_hunk<CR>", { desc = "Seset hunk" })
+		git_map("n", "<leader>gS", "<cmd>Gitsigns stage_buffer<cr>", { desc = "Stage buffer" })
+		git_map("n", "<leader>gu", "<cmd>Gitsigns undo_stage_hunk<cr>", { desc = "Undo stage hunk" })
+		git_map("n", "<leader>gR", "<cmd>Gitsigns reset_buffer<cr>", { desc = "Reset buffer" })
+		git_map("n", "<leader>gp","<cmd>Gitsigns preview_hunk_inline<cr>", { desc = "Preview hunk" })
+		git_map("n", "<leader>gb", "<cmd>Gitsigns blame_line --full<cr>", { desc = "Blame line" })
 	end,
 })
